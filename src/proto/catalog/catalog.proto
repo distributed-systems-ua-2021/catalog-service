@@ -1,0 +1,19 @@
+syntax = "proto3";
+
+package geo;
+
+service CatalogService {
+  rpc GetCatalog (Empty) returns (Catalog);
+}
+
+message Empty {
+}
+
+message Catalog {
+  repeated Product product = 1;
+}
+message Product {
+  string label = 1;
+  string description = 2;
+  string price = 3;
+}

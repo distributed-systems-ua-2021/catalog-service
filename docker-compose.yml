@@ -1,0 +1,36 @@
+version: "3.7"
+
+services:
+  etcd:
+    image: 'bitnami/etcd:latest'
+    environment:
+      - ALLOW_NONE_AUTHENTICATION=yes
+      - ETCD_ADVERTISE_CLIENT_URLS=http://etcd:2379
+    ports:
+      - 2379:2379
+      - 2380:2380
+
+  memcached:
+    image: 'bitnami/memcached:latest'
+    ports:
+      - 11211:11211
+
+  server1:
+    build:
+      context: ./
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
+    restart: "unless-stopped"
+
+  server2:
+    build:
+      context: ./
+      dockerfile: Dockerfile
+    ports:
+      - "3001:3000"
+    restart: "unless-stopped"
+
+volumes:
+  data:
+    driver: local
